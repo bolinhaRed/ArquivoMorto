@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arquivo Morto — Caso 001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#D8D0BF; --paper:#FBF8F1; --paper-2:#F1EBDD; --ink:#24211D; --muted:#6B645A;
+  --line:#BDB3A2; --red:#7A1E1E; --red-soft:#F0DCD8; --ok:#2F5D3A; --ok-soft:#DCE8DA;
+  --folder:#C8B68A; --nav:#2A2723; --nav-ink:#EDE6D6; --nav-active:#E2C88A;
+  --d-B:#E8DCBC; --d-E:#D8E0D1; --d-S:#EAD6D1; --d-C:#D5DDE4; --d-F:#E3D3BD;
+  --wall:#2A2723; --win:#5C86A8;
+  --p-Ed:#7A1E1E; --p-Ar:#8A5A2B; --p-Vi:#2F6B4F; --p-El:#5B4B8A; --p-Th:#2C5D8A; --p-He:#4E4B47;
+  --serif:"Courier Prime","Courier New",Courier,monospace;
+  --sans:"Libre Franklin","Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --desk:#1D1C1A; --paper:#2A2824; --paper-2:#33302B; --ink:#ECE5D6; --muted:#A49C8D;
+    --line:#4B463E; --red:#D06A62; --red-soft:#43282A; --ok:#7DB58A; --ok-soft:#263A2B;
+    --folder:#4A4133; --nav:#121110; --nav-ink:#DCD4C3; --nav-active:#E2C88A;
+    --d-B:#3B3426; --d-E:#2F3A31; --d-S:#3E2F2D; --d-C:#2D353C; --d-F:#3D3226;
+    --wall:#D9D0BE; --win:#86AFD0;
+    --p-Ed:#D06A62; --p-Ar:#C9925A; --p-Vi:#6FB38F; --p-El:#A495D6; --p-Th:#79A8D6; --p-He:#B3ADA4;
+  }
+}
+:root[data-theme="dark"]{
+    color-scheme:dark;
+    --desk:#1D1C1A; --paper:#2A2824; --paper-2:#33302B; --ink:#ECE5D6; --muted:#A49C8D;
+    --line:#4B463E; --red:#D06A62; --red-soft:#43282A; --ok:#7DB58A; --ok-soft:#263A2B;
+    --folder:#4A4133; --nav:#121110; --nav-ink:#DCD4C3; --nav-active:#E2C88A;
+    --d-B:#3B3426; --d-E:#2F3A31; --d-S:#3E2F2D; --d-C:#2D353C; --d-F:#3D3226;
+    --wall:#D9D0BE; --win:#86AFD0;
+    --p-Ed:#D06A62; --p-Ar:#C9925A; --p-Vi:#6FB38F; --p-El:#A495D6; --p-Th:#79A8D6; --p-He:#B3ADA4;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--desk);color:var(--ink);font:16px/1.5 var(--sans);min-height:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--nav)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--nav-active);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--nav);color:var(--nav-ink);
+  display:flex;align-items:center;gap:.75rem;padding:.6rem 1rem}
+header.top .t{flex:1;min-width:0}
+header.top .t b{display:block;font:700 1.05rem/1.2 var(--serif);letter-spacing:.02em}
+header.top .t span{font-size:.78rem;opacity:.75}
+.hbtn{background:transparent;border:1px solid rgba(237,230,214,.35);color:var(--nav-ink);border-radius:999px;padding:.35rem .8rem;font-size:.85rem}
+
+main{max-width:720px;margin:0 auto;padding:1rem 1rem calc(5.5rem + env(safe-area-inset-bottom,0px))}
+
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--nav);display:grid;grid-template-columns:repeat(5,1fr);
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.bottom button{background:none;border:0;color:var(--nav-ink);opacity:.7;padding:.55rem .2rem .6rem;font-size:.74rem;display:flex;flex-direction:column;align-items:center;gap:.2rem;position:relative;min-height:56px}
+nav.bottom button svg{width:22px;height:22px}
+nav.bottom button[aria-current="page"]{opacity:1;color:var(--nav-active)}
+nav.bottom .dot{position:absolute;top:.45rem;left:calc(50% + 8px);width:8px;height:8px;border-radius:50%;background:var(--red)}
+
+h1,h2,h3{font-family:var(--serif);line-height:1.2;margin:0}
+h2{font-size:1.35rem;margin:1.5rem 0 .6rem}
+h3{font-size:1.05rem;margin:1.2rem 0 .4rem}
+p{margin:.5rem 0}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+
+/* folder hero */
+.folder{background:var(--folder);border-radius:4px 14px 4px 4px;padding:1.2rem 1.1rem 1.1rem;position:relative;margin-top:.4rem}
+.folder::before{content:"";position:absolute;left:0;top:-14px;width:42%;height:16px;background:var(--folder);border-radius:6px 6px 0 0}
+.folder .no{font:700 .85rem var(--serif);opacity:.8}
+.folder h1{font-size:1.7rem;margin:.3rem 0 .5rem}
+.folder p{max-width:60ch}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:1rem 1.05rem;margin:.8rem 0}
+.sheet.typed{font-family:var(--serif);font-size:.98rem;line-height:1.6}
+.progress{display:flex;gap:1rem;flex-wrap:wrap;font-size:.9rem}
+.progress div b{display:block;font:700 1.3rem var(--serif)}
+.rules li{margin:.35rem 0}
+.btn{background:var(--ink);color:var(--paper);border:0;border-radius:6px;padding:.7rem 1rem;font-weight:600;min-height:44px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.red{background:var(--red);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+
+/* doc list */
+.lvl{margin:1.2rem 0 .4rem;font:700 .95rem var(--serif);color:var(--muted)}
+.doclist{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.docitem{width:100%;text-align:left;background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:3px;
+  padding:.65rem .8rem;display:flex;gap:.7rem;align-items:baseline}
+.docitem.unread{border-left-color:var(--red)}
+.docitem .id{font:700 .9rem var(--serif);min-width:2.6rem}
+.docitem .ti{flex:1}
+.docitem .tag{font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:.05rem .45rem;color:var(--muted)}
+.docitem .new{font-size:.72rem;color:var(--red);font-weight:600}
+.locked{margin-top:1rem;padding:.8rem;border:1px dashed var(--line);border-radius:3px;color:var(--muted);font-size:.9rem}
+
+/* doc overlay */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(20,18,16,.55);display:flex;align-items:flex-end;justify-content:center}
+.overlay[hidden]{display:none}
+.panel{background:var(--paper);color:var(--ink);width:100%;max-width:720px;max-height:92%;overflow:auto;border-radius:12px 12px 0 0;
+  padding:1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom,0px));box-shadow:0 -6px 30px rgba(0,0,0,.25)}
+.panel .bar{display:flex;align-items:center;gap:.6rem;position:sticky;top:-1rem;background:var(--paper);padding:.6rem 0 .5rem;margin-top:-.6rem;border-bottom:1px solid var(--line)}
+.panel .bar h2{margin:0;flex:1;font-size:1.15rem}
+.panel .body{font-family:var(--serif);font-size:1rem;line-height:1.62;padding-top:.6rem}
+.panel .body blockquote{margin:.6rem 0;padding:.2rem 0 .2rem .9rem;border-left:3px solid var(--line)}
+.panel .meta{font-style:italic;color:var(--muted)}
+.stamp{display:inline-block;font:700 .82rem var(--serif);letter-spacing:.06em;padding:.15rem .5rem;border:2px solid currentColor;border-radius:3px;transform:rotate(-2deg);margin:.6rem .5rem .2rem 0}
+.stamp.ok{color:var(--ok)} .stamp.no{color:var(--red)}
+.stampline{margin:.3rem 0 .8rem}
+table.t{border-collapse:collapse;width:100%;font-size:.9rem;margin:.6rem 0}
+table.t th,table.t td{border:1px solid var(--line);padding:.35rem .45rem;text-align:left;vertical-align:top}
+table.t th{background:var(--paper-2);font-weight:700}
+.tw{overflow-x:auto}
+
+/* people */
+.person{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:.9rem 1rem;margin:.7rem 0;border-top:5px solid var(--pc)}
+.person h3{margin:0;font-size:1.1rem}
+.person .role{font-size:.85rem;color:var(--muted);margin:.1rem 0 .4rem}
+.person .decl{font-family:var(--serif);font-size:.95rem;margin:.5rem 0;padding-left:.8rem;border-left:3px solid var(--line)}
+.pos{display:flex;gap:.5rem;align-items:flex-start;font-size:.9rem;margin:.35rem 0}
+.pill{font-size:.72rem;font-weight:700;border-radius:999px;padding:.12rem .5rem;white-space:nowrap}
+.pill.decl{background:var(--paper-2);color:var(--muted);border:1px solid var(--line)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.no{background:var(--red-soft);color:var(--red)}
+
+/* segmented */
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:3px;margin:.2rem 0 1rem}
+.seg button{background:none;border:0;border-radius:6px;padding:.5rem;font-weight:600;font-size:.9rem;min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--paper);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+
+/* plant */
+.plan-wrap{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:.6rem .5rem .8rem}
+.plan{display:grid;grid-template-columns:1.2rem repeat(6,1fr);grid-template-rows:1.2rem repeat(6,auto);max-width:460px;margin:0 auto;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:0 0}
+.plan .lab{font:700 .75rem var(--serif);color:var(--muted);display:flex;align-items:center;justify-content:center}
+.cell{position:relative;aspect-ratio:1;border:0;padding:0;background:var(--dc);display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 0 .5px rgba(80,70,60,.25)}
+.cell .ob{position:absolute;inset:6%;border:1.5px solid var(--wall);border-radius:2px;opacity:.75;
+  background:repeating-linear-gradient(45deg,transparent 0 4px,color-mix(in srgb,var(--wall) 35%,transparent) 4px 5px)}
+.cell .seat{position:absolute;inset:22%;border:1.5px solid var(--wall);border-radius:30%;opacity:.55}
+.cell .lbl{position:absolute;left:0;right:0;bottom:2px;font:600 8.5px/1 var(--sans);text-align:center;color:var(--muted);pointer-events:none;letter-spacing:-.01em}
+.cell .ob + .lbl{color:var(--ink);opacity:.75}
+.cell.wt{border-top:3px solid var(--wall)} .cell.wb{border-bottom:3px solid var(--wall)}
+.cell.wl{border-left:3px solid var(--wall)} .cell.wr{border-right:3px solid var(--wall)}
+.cell.winL{border-left:5px double var(--win)} .cell.winR{border-right:5px double var(--win)}
+.cell.doorB{border-bottom:3px dashed var(--win)}
+.cell .tok{position:relative;z-index:2;width:72%;aspect-ratio:1;border-radius:50%;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center;
+  font:700 .82rem var(--sans);box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.cell .tok.victim{background:transparent;color:var(--pc);border:2.5px solid var(--pc)}
+.cell .mk{position:relative;z-index:1;font:700 1.15rem var(--sans);color:var(--red)}
+.cell .ax{position:relative;z-index:1;font:600 .95rem var(--sans);color:var(--muted);opacity:.5}
+.cell.conflict{outline:3px solid var(--red);outline-offset:-3px;z-index:3}
+.cell.sel{outline:2px solid var(--nav-active);outline-offset:-2px}
+.dname{position:absolute;top:2px;left:3px;font:700 8px/1 var(--sans);color:var(--muted);pointer-events:none;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 .4rem}
+.chip{border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:.35rem .7rem .35rem .35rem;display:flex;align-items:center;gap:.4rem;font-size:.85rem;min-height:40px}
+.chip .tk{width:24px;height:24px;border-radius:50%;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center;font:700 .68rem var(--sans)}
+.chip .tk.victim{background:transparent;border:2px solid var(--pc);color:var(--pc)}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--ink)}
+.chip .co{font:700 .78rem var(--serif);color:var(--muted)}
+.info{min-height:2.6em;font-size:.88rem;color:var(--muted);margin:.4rem 0}
+.status{font-size:.88rem;margin:.3rem 0}
+.status.bad{color:var(--red);font-weight:600}
+.toggle{display:flex;align-items:center;gap:.5rem;font-size:.88rem;margin:.6rem 0}
+.toggle input{width:20px;height:20px}
+.cell.ref::after{content:"";position:absolute;inset:2px;border:3px dashed var(--nav-active);border-radius:4px;z-index:4;pointer-events:none}
+.cell.refd::before{content:"";position:absolute;inset:0;background:color-mix(in srgb,var(--nav-active) 30%,transparent);pointer-events:none;z-index:1}
+.banner{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--pc,var(--line));border-radius:3px;padding:.6rem .8rem;margin:.6rem 0 .8rem;font-size:.95rem;line-height:1.45}
+.banner b{font-family:var(--serif)}
+.chip .sd{width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
+.chip .sd.ok{background:var(--ok)} .chip .sd.no{background:var(--red)}
+.chip .nw{font-size:.68rem;color:var(--red);font-weight:700}
+.sum{font:600 1rem/1.5 var(--sans);background:var(--paper-2);border-left:4px solid var(--nav-active);padding:.6rem .8rem;margin:.4rem 0 .8rem}
+details.full summary{cursor:pointer;color:var(--muted);font-family:var(--sans);font-size:.9rem;padding:.5rem 0;min-height:44px}
+
+/* grids */
+.grid{border-collapse:collapse;margin:.4rem 0 1rem;font-size:.82rem;width:100%;table-layout:fixed}
+.grid th{font-weight:600;padding:.25rem .15rem;text-align:center;color:var(--muted);font-size:.74rem;line-height:1.2;word-break:break-word}
+.grid th.rh{text-align:left;color:var(--ink);font-size:.82rem;width:24%}
+.grid td{padding:0;border:1px solid var(--line);background:var(--paper)}
+.grid td button{width:100%;height:42px;border:0;background:transparent;font:700 1.05rem var(--sans)}
+.grid td button.v{color:var(--ok);background:var(--ok-soft)}
+.grid td button.x{color:var(--red)}
+.grid td button.q{color:var(--muted)}
+.grid td button.ax{color:var(--muted);opacity:.4;font-weight:500}
+.grid td button.bad{outline:3px solid var(--red);outline-offset:-3px}
+.gwarn{color:var(--red);font-weight:600;font-size:.88rem}
+textarea{width:100%;min-height:9rem;font:1rem/1.5 var(--serif);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:.7rem}
+
+/* accuse */
+.field{margin:.7rem 0}
+.field label{display:block;font-weight:600;font-size:.9rem;margin-bottom:.25rem}
+select{width:100%;min-height:46px;font:inherit;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:.4rem .6rem}
+.verdict{padding:.9rem 1rem;border-radius:3px;margin:.8rem 0;font-weight:600}
+.verdict.bad{background:var(--red-soft);color:var(--red)}
+.score td:last-child{text-align:right;font-weight:700}
+.big{font:700 2.4rem/1 var(--serif)}
+
+.toast{position:fixed;left:50%;bottom:calc(5rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;background:var(--ink);color:var(--paper);
+  padding:.6rem 1rem;border-radius:6px;font-size:.88rem;max-width:90%;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.toast[hidden]{display:none}
+nav.bottom{grid-template-columns:repeat(4,1fr)}
+.cell .wp{position:absolute;top:2px;right:2px;left:2px;font:700 7.5px/1 var(--sans);color:var(--red);text-align:right;z-index:2;pointer-events:none}
+.cards{display:grid;gap:.6rem}
+.card{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--pc,var(--line));border-radius:3px;padding:.75rem .9rem}
+.card .hd{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:.3rem}
+.card .hd b{font-family:var(--serif);font-size:1rem;flex:1;min-width:10rem}
+.card p{margin:.2rem 0;font-family:var(--serif);line-height:1.55}
+.card .act{margin-top:.5rem}
+.pill.prova{background:var(--ok-soft);color:var(--ok)}
+.pill.decl{background:var(--paper-2);color:var(--muted);border:1px solid var(--line)}
+.choice{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:.5rem 0 1rem}
+.choice button{min-height:56px;border:1.5px solid var(--line);background:var(--paper);border-radius:8px;font:700 1.2rem var(--serif)}
+.choice button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.who{display:inline-block;background:var(--ink);color:var(--paper);border-radius:999px;padding:.1rem .6rem;font-size:.8rem;font-weight:600}
+.banner .bc{margin:.35rem 0 0;padding-top:.35rem;border-top:1px dashed var(--line)}
+.banner .bc .pill{margin-right:.35rem}
+.ok-line{color:var(--ok);font-weight:600}
+nav.bottom[hidden]{display:none}
+:root{--d0:#E8DCBC;--d1:#D8E0D1;--d2:#EAD6D1;--d3:#D5DDE4;--d4:#E3D3BD}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--d0:#3B3426;--d1:#2F3A31;--d2:#3E2F2D;--d3:#2D353C;--d4:#3D3226}}
+:root[data-theme="dark"]{--d0:#3B3426;--d1:#2F3A31;--d2:#3E2F2D;--d3:#2D353C;--d4:#3D3226}
+.cell{background-color:var(--dc);background-size:24px 24px;image-rendering:pixelated;overflow:hidden}
+.cell img.spr{position:absolute;left:12%;top:8%;width:76%;height:76%;object-fit:contain;image-rendering:pixelated;z-index:1;pointer-events:none;filter:drop-shadow(0 1px 0 rgba(0,0,0,.35))}
+.cell.isob{box-shadow:inset 0 0 0 999px rgba(20,16,12,.22)}
+.cell .lbl{z-index:3;left:2px;right:2px;bottom:1px;padding:1px 0;border-radius:2px;background:color-mix(in srgb,var(--paper) 82%,transparent);color:var(--ink)}
+.dname{z-index:3;background:color-mix(in srgb,var(--paper) 85%,transparent);padding:1px 2px;border-radius:2px;color:var(--ink)}
+.cell .wp{z-index:3;left:auto;background:color-mix(in srgb,var(--paper) 85%,transparent);padding:1px 2px;border-radius:2px}
+.cell .tok.pic{width:80%;aspect-ratio:1;border-radius:6px;background:#2a2723;border:2.5px solid var(--pc);overflow:hidden;z-index:4;padding:0}
+.cell .tok.pic img{width:100%;height:100%;display:block;image-rendering:pixelated}
+.cell .tok.pic.victim img,.av.vic,.tki.vic{filter:grayscale(1) brightness(.85)}
+.cell .tok.pic.victim::after{content:"✝";position:absolute;right:2px;top:0;color:var(--red);font:700 .8rem var(--serif);text-shadow:0 0 2px #fff}
+.cell .mk,.cell .ax{z-index:3;text-shadow:0 0 3px var(--paper)}
+.chip .tk.pic{background:#2a2723;border-radius:5px;width:30px;height:30px;overflow:hidden}
+.chip .tk.pic img{width:100%;height:100%;image-rendering:pixelated;display:block}
+.av{width:40px;height:40px;image-rendering:pixelated;border-radius:6px;border:2px solid var(--pc,var(--line));background:#2a2723;flex:none}
+.pp{display:flex;gap:.7rem;align-items:center}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="t"><b>Arquivo Morto</b><span id="hsub">Arquivo de casos</span></div>
+  <button class="hbtn" id="helpBtn" type="button">Pedir ajuda</button>
+</header>
+<main id="main"></main>
+<nav class="bottom" id="nav" aria-label="Secções"></nav>
+<div class="overlay" id="ov" hidden><div class="panel" role="dialog" aria-modal="true" id="panel"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+var ASSETS={"p13": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkVCOTQyNjA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkVCOTQyNTA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+xMKxcgAAAFdQTFRFHzc2Vlh7m0xR5t7KWIDM4aFxzPYfmoVxv3BN/9Vpyub10YUem/D90BlGXGtTgKU/YqvU////QDafPSU7Qn87iVpFipYfgClUKlo5p6y6YGBgUjtAAAAAPoct7wAAAB10Uk5T/////////////////////////////////////wBZhudqAAAAuElEQVR42szRQQ6EIAwFUGLTwMZl00jn/uccSivCgLqdH3f/AQXD5yXh74BY7oB2m6Y3YdGbmYAMoIkBbH1chPEAeQbSHzODZAGoRiaQYixfVAGKfocUorKciNAETNckQUQRQoReXAATegAquge4BklHhAoirmaove5e2giLn1Vu2OYD5mfAawBt/a7hEfAFrHfjoOzZwNXvx2GAa07Q9wbyAHgB8hocDnJ28QqiP8Et6DKA53wFGABHrVFiZYUyKAAAAABJRU5ErkJggg==", "p17": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkYxQjhGQTA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkYxQjhGOTA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+hWYt8wAAAFdQTFRFHzc2Vlh7m0xR5t7KWIDM4aFxzPYfmoVxv3BN/9Vpyub10YUem/D90BlGXGtTgKU/YqvU////QDafPSU7Qn87iVpFipYfgClUKlo5p6y6YGBgUjtAAAAAPoct7wAAAB10Uk5T/////////////////////////////////////wBZhudqAAAAjUlEQVR42rzRMQ7AIAgFUBcDF2Ahvf85K2rBmG9IOvgXB14QpTxJyl0gHgxEkCiwngMBgFtqD2MgYkWxA4MaWVssHfoNbB1SUCHwGccoaAYHfAKzBzP+h3gEw12k4In6AfgAJ9C30X7g2GEs1BQG2sITENEGdGQBnylRtQxAng6WutKeBvQy0D8gySvAABP6VWy5xLeDAAAAAElFTkSuQmCC", "p2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkUwRTYzQjA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkUwRTYzQTA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+bXaq2wAAAFdQTFRFHzc2Vlh7m0xR5t7KWIDM4aFxzPYfmoVxv3BN/9Vpyub10YUem/D90BlGXGtTgKU/YqvU////QDafPSU7Qn87iVpFipYfgClUKlo5p6y6YGBgUjtAAAAAPoct7wAAAB10Uk5T/////////////////////////////////////wBZhudqAAAA5klEQVR42pTT3QrDMAgF4AYMeDMQJFfm/Z9zVk3jsmY/56Jj9dtp2mZH/5LjT9AaIu5BawawbUAbIIsNaAmIZczfKgaYWSom4Ih40Rtg+61DPV5mAGbEWq2enRjKoEmtVc9WvoR+WxosGUgC9QXwBD0B3ANhW+AtiAp8aCbgBHo0+HwHZKwRb0BU2BhvQY8ngdejXEH3l/UB9K7nyO+UaLnNAYhslZRA3nICRGBj/TTwsidBAICAfK5ZNi2UE0DxsR8zgFLkFAUs0TOBzuG8RswDuHBwRisGyOKwghAXCAK//LufAgwA56lTPqn5ZuUAAAAASUVORK5CYII=", "p16": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkVFRUYwODA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkVFRUYwNzA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+ZOmb7gAAAB5QTFRFUjtAiVpFWIDMv3BN0BlGp6y64aFxVlh76EREAAAA2pXalwAAAAp0Uk5T////////////ALLMLM8AAACsSURBVHjavNPbDoMwCAZgFCj1/V94WHAlFdyyi3FhmvxfAE9wfCj4LyDqWiUgy1cCIb9A/wkQIWLTWgWEBuhxAayBmRyApgA12Axsy4wJWhjxCFoOjrEkPoPwJFLQWrbEfFkXwApYCx1TAtvCRf490AQ9BWw3whVgHltyAUD4FHphkTsQLfaSfd9lARKAnOBNYOYuxIELCPkCTNzAOAQBIR/CTyOXb/7NlwADAKh8HnW/MKtNAAAAAElFTkSuQmCC", "p15": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkVFRUYwNDA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkVFRUYwMzA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+58nKxAAAAFdQTFRFHzc2Vlh7m0xR5t7KWIDM4aFxzPYfmoVxv3BN/9Vpyub10YUem/D90BlGXGtTgKU/YqvU////QDafPSU7Qn87iVpFipYfgClUKlo5p6y6YGBgUjtAAAAAPoct7wAAAB10Uk5T/////////////////////////////////////wBZhudqAAAAqklEQVR42rzRMQ7EIAwEQDfIfgBIKM7/33lm4SAk5pBS3BY0OyA7oXMT+i/QHh+oeoLcfg/UAyISEFkAta5cxvkbXJ8YICUDCacPBBVA8EEbMVThAK0DlHdc0D5Aue7PoCp1CwXQV0AqkAWQEvTCQ1x+N8s37AKe8gR8y2PNWx9jngARTX2OsRGqLdJrygAgNPqejDRBp9PlTgo4Vr3FljFwvAcMsMlHgAEAjYxXMILtUOIAAAAASUVORK5CYII=", "p32": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkZGRjJDNjA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkZGRjJDNTA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+8NPlZQAAABtQTFRFHzc2moVxKlo5iVpFv3BN4aFxYGBgUjtAAAAAgxJx6QAAAAl0Uk5T//////////8AU094EgAAAKtJREFUeNqs0UsSAyEIBFAUBO9/4oh/MxCTqvTGRb9xFCFfAv8EMmMDEVOA1e/iF0A9p1hAu1RDJihbaCm6eKBVcm6xADXQ/mMBwVIRCrqgfks+KGVKz2scoO1RR2Hcok+hLETmYw2QPJAHoAsg9EDW4yGWHsUGIq1G9N5CgzXPOTDLKQLvgPkdBA13AMybmHWIMVYAHQwRwuyLgNWP7L0JuvkINN+DS14CDAApOxo2ZVTIOQAAAABJRU5ErkJggg==", "p3": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkUzOTlDNDA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkUzOTlDMzA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+l4J1lQAAAB5QTFRF4aFx0YUe/9Vpp6y6yub1PSU7v3BNiVpFUjtAAAAAlDT3agAAAAp0Uk5T////////////ALLMLM8AAAC5SURBVHjaxNJJFoQgDARQZEiK+1/YEEUChnbZtcKXL2NC/UgwY2j2AKXgbWbQyb9AGiCnFbR/kiZrHCAxwCwT+h2VO8B8GaGuovigVm7B6yAGEFFoIWL3mJ8AEMKAOBnsACkgF8gWacQBOrPuQgb1FyDenIL7IlvQ19+Ayk+dsw9Gcnbb3tTz+7G0IR4gX8cRY5wa5gE6gdbj0YA8Moy4O+oCcQWp1w3gAXA35QqwgGt8iemYbk4BBgDAlh4ZNfVy9AAAAABJRU5ErkJggg==", "p14": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkVFRUYwMDA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkVFRUVGRjA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+8W8oCwAAABtQTFRFUjtAiVpFv3BNmoVxWIDM4aFxVlh7p6y6AAAAVRLMZQAAAAl0Uk5T//////////8AU094EgAAAIxJREFUeNrc00EOxCAIBVAE+c79TzxOtRanUJt0179wwzMqRPosQm8DIlK2BGDUZ3EfiAHFBdwTAhFVritHIJGqEiWNj9CWCGgFfA1+uQDtBH4C+iXDZ8qiUV3ErbbD8IdVjsABZpQFgAcGQa7BH6ibZN+eW2ABbPIk6FQfoAkHzILOdUzXWH6crwADAM0GG+yBbvvgAAAAAElFTkSuQmCC", "p33": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MzAxRUY1MjA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkZGRjJDOTA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+pZ7BBgAAAFdQTFRFHzc2Vlh7m0xR5t7KWIDM4aFxzPYfmoVxv3BN/9Vpyub10YUem/D90BlGXGtTgKU/YqvU////QDafPSU7Qn87iVpFipYfgClUKlo5p6y6YGBgUjtAAAAAPoct7wAAAB10Uk5T/////////////////////////////////////wBZhudqAAAAvUlEQVR42qzS0Q6FIAgGYObGxgPI5kbv/5wH6BiaZDf9F13IF5oEx0vgSwCWZslB1Ccyg9YWAWmDQQyAScMdwAK8bplbBBARIrHnM0DcAd0CkeIcawdWwKx9KD3kIdYBL7BelPbHMzQ0uAMz/qHJVZOdELcgdgDIhvUXRDaVHWAfWjZumwYzP81Cw1HOQfbLdNDuANoIbGECUDXexYCca5cAL9daSnEg0l87U+tVVwFR99RICu71b8BLfgIMAJHLVXZEADjTAAAAAElFTkSuQmCC", "p1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkUwRTYzNzA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkUwRTYzNjA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+uL956gAAABtQTFRFiVpFv3BN0BlGQn874aFx6EREKlo5Hzc2AAAA64fgBwAAAAl0Uk5T//////////8AU094EgAAAKpJREFUeNq80OEOwyAIBGBgqHv/Jx4g2tVd2/hnl8Y0ua8VpfdD6L9ApBR7LBhIpCxiE5QRCJhZI4yBiHX+ta8YSPb2CwSIWMkXA6oAMFlD1MeAIEe8ATFmHEPRDNzvwY/C8Kol9ohrugK+xR2YN81XYPZcAWhfoHrOoFkSNCtfnm5o1BOMPgnNHgAjDtpI7uCv0xho58SAh1lBXbML1vpni13Qh3zIR4ABAJX8GcaFccRbAAAAAElFTkSuQmCC", "p18": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2RTIxODU5OUMyOEZFQTExOTU1RkVDNTg4NjE1NEQ1NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3MkYxQjhGRTA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MkYxQjhGRDA3NEExMUVCQjQxRkVENDMyMjgwNDJEOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM3Q0E0REUwOTIwNkVCMTE5QTMwREU3NUU4QzUxNjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjZFMjE4NTk5QzI4RkVBMTE5NTVGRUM1ODg2MTU0RDU1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+QxqPigAAAA9QTFRFv3BN4aFxiVpFUjtAAAAAZ6CI0QAAAAV0Uk5T/////wD7tg5TAAAAlElEQVR42rzS3Q6AIAgGUH58/2dOMAkm6Npa30U3nISh0A6BLwHPFIBdMsCcizcA7lRAaqgBL0ILRPsmAJ9ACoikAxHFHg7oCCAAM9BsRlSxgv63zXAAYRWuBc4mOeBnggJwrCdgnk8V0NvoiypP4L5MKRdAhbvwLVjvwl7SqJPGgH9qFDIA10AItF29i1/AIZcAAwAiWQv0cn6r8wAAAABJRU5ErkJggg==", "s113": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgCAYAAAAbifjMAAAAAXNSR0IArs4c6QAAAahJREFUSIntlU0oRFEYhp8Zs2HBQpQVoRQpC0koCynFxkbKimKpRLOalCxEo5QSm7FBlFJCIj/5mSY/k8ZvM3N1JU26KWbBkgX3mjtzRid3Y+Hb3Pt93/u+5+s959xrA96xEA6A1Y4Gpje9tNdXSZF0bKNnHbuV1YF/Ab524ToYJhJ95ToYliLFYh2xjaVz9XcT6DHU3wNASm2dCbRwu2vKTzvdYoH4cHk0Hh2jlNjL5Sa42QsBoMxefRYqWwFoKXw2kcaSCUSfLgDISvvMGwMDANz5z+QmsGziyNYKANXlDRyerBvPovtjpibmDNzaUUgs4PJoVPjmARibWQTAri5ASr7cBMliamIO7Tkq7NmAd3dNIUvnKs2leTJ6BrbvICw2MSc9TUiMRF8TaklNjA/dVIDqjG+a0ANlpM2UFzhnDREAZ12T0TNd58vBSVweLUGwuLuM5a5x0VriCXYOHsyFL2+9wz45gV41Yi6oyZBx5Q3/Npn+beoFQIUIirb/s0BlbrapqW9r/PmIvTM/nkSZg/VHvsp6KC9v1gQKMlKlSIGYdxsWf+8f1fyL/rHn7LYAAAAASUVORK5CYII=", "s307": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAfCAYAAACGVs+MAAAAAXNSR0IArs4c6QAAAYpJREFUSIntlb9LQlEUxz+KW5NR4BIaLlaQDyHEQXNxcWv3f6hJcGhqEKKhaG9yd+otLWmDSCAaZC5h0RIUNjnboLfu+6VP6d0Wv9N993zv+X4599x3fMCIf0QA4LN6QrPeI5mJKREVWmsHx/jFZjITo1nvKRMX8MtBFRUwaxgMqKqArQFVPWC+akMPqIJtD6gov53W8hUsX8HyFQTkjbPLa9LxqKfid51n0vHoj6YP0zjeXQ96auDh48vwHQA43U8AUOn2ubgf0G6/AJALD7l5XbFNJGK58BDAkSdzNS3C4d4qhe1NAIq11tiAjGwI0CJkQ3D7DppNQUTsaGv87cSTuVpwktsEv3Xr99C0mEjmxJuVR8BSAYBSPmVLLusNSvkUZb0xlSdzDYYm52TYVsALcSf4gJHchJ23gVtPCyG+MaMJ9VLBUwNmuL4Cr2CpgOczoaJPN3B1XnWdaycx/hE8tp4W9rPwFVS6fdu1MgN/hYUNiKdkXs8LSw8Uay33p+fhTmCetpZxrBrfMkGkdi+NP+gAAAAASUVORK5CYII=", "s270": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAgCAYAAAAi7kmXAAAAAXNSR0IArs4c6QAAAPlJREFUOI1jZICA/wykAUYWGOvz5S1E6eDV9WFgYGBgYCLRJjggWyPcqZwfb9LZxhd7dsIFJVzcGR5uOQfny/sYMTw8dg5FI9k2MkLp/3+O9BLnRJtiBgbkeIQ5Dd1Z8lZGcG9IuLgPCqeihRq6E5FDeYCdysDAgNNpuBIAqXmRgYGB4T8jAwPD/wlesSTpKti2eADy4wCVAGff/iVZIyMDNDpITAAMLDDND4+dY5C3MmJ4uOUcQ/LmXyiK5/qyMcj7GKFYiOFHdE24xOAa5a0QJqoZq2NlozgZxoClRZhCdM0wryDbiJJWb529CaeR2WiA/LRKeTySCgC1B2t0ObRFDwAAAABJRU5ErkJggg==", "s99": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgCAYAAAAbifjMAAAAAXNSR0IArs4c6QAAAVFJREFUSInFlaFuwzAQhv8kfoOASZWGxjYYUFo8KSisU/YMQ8PGQ3uGVRsLmjQ8WlA6NjTcR0g80Fx6du5cF0z7JUvO+e6zzz7HQFxubKqyWPD30x0A4OrxVfXNtVmfb9vJMPbF1ZggEDyQi+wPHxuCZBzgtMAToCwHy/UcjTFO2gMAQL0aYDsH2znUq0EFGR7AZTvn9W0jQ0zorEnz8VKoygJVWagQadzwQeCQSj3WDM1qG6qhAe+fOaqywG7f+wAK5kslqO36YyrNASKmQMFSGkeYvxezYzy1B6HUOkjV3wCkytOqUQRIRZNUSJNzM/93SDYVwM85ZlMB5+j/ASY00CVJtXsArYxj5T27jSniJ+IBwqv88vUDALi/vvRSqEplBVy7fY+bi8XU15S0BzFNgHCWzfbN+26XaxXi2uWa3r2wTT5ho5iMOcZeanFiAPgFdp+H07uLHm0AAAAASUVORK5CYII=", "s239": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAGZJREFUKJFjZICA/wwIwMiAAzAyMDD8f7x7BlxA1jUDpwYmXKZQrJgFh/h/LGKMGIrfrG/GqlsksPY/6c64tO0wXMDcTgOnYjqGxslDN6hssnf/UpyKthZGMzAwQNMGkji2NAGXBwAcFhRteJVXRgAAAABJRU5ErkJggg==", "s46": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAQCAYAAAAvf+5AAAAAAXNSR0IArs4c6QAAAMdJREFUKJGFkjEOgkAQRR+GWGmorCwJCR1ewCNoawKVHY0lVhQmdlrYcgFqC4+gsYHGA3ACrbzAWuDiAgu+ZJLNzM/82dmFEkE3AmAAiNd5LxOtkDUTYDgZ8b6depqCCfC8570iaV0jTArCpNB3VElCu9sawN6mWkFxCOrWa28JYKjxzf2EluMSB2NorCYOxliO255R2uho3boLEyDaZXhTSyt4pFl1FvnG1z6fWqtmjOaL/9YAx+tFK1jNfKDcl/rFjIauqn0AFNY8eMf2IbMAAAAASUVORK5CYII=", "s308": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAAAXNSR0IArs4c6QAAAGpJREFUGJVjZICA/wz4ASMjAwPD/zfrmxkYGBgYTh66wWBup4HBFgmsZWCCaUGWYGBgYDC302A4eegGnM+ELIEOkMVQTEQHOE1ElkB3Cgu6TlxsGPhf4WTxnwESTHCMJMbACFOIoRUVMAIAJlQvFHMOmXoAAAAASUVORK5CYII=", "s285": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAOCAYAAAAWo42rAAAAAXNSR0IArs4c6QAAAK9JREFUKJF1kTEOwjAMRV8Ra5i5Q2cGBnoYpu6IEakzVQ+CygFYGAAhhrL2Dl06dUZmoZabhC9FTr6f41iBuMQ3ZjHo+b4EsA/KvdoD8IsSAxUaZeEkBjXtwCp1es52ZfjGph0m0baW/HzSpOs7XRae25tc31E8XposNmua1gPrxZJj6qgPuYKf25VsVwIkOoyZcqIR9H0BpNrmMu7tMFZ+ZfIPBMD1XeAFvZn+sea/gyVHP3oH1awAAAAASUVORK5CYII=", "s117": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAAXNSR0IArs4c6QAAAYZJREFUKJGdkU1LAlEYhR/TqAinmhJjUsuChIoWObXICndtpX2LfkK7NhHRD2jTPwhaikSbdoEYEboo+hT6VKIQTa8UadPYwhwb3ERndS/nvOeee14LVVT4JyxAZXNjHVfqALskGURRCOOueGSuz+5N/GXHBMurazQB+Cf9+MYGKAphDPjGBlA8MmpAZWVrH7skoXhkFI9MbQbAVnNU3IMo7kFTvKfULfFYnKWgj6IQKG6VeCyOGlC5+NHYANI3p0QjOwBk8oJkoUKgv4NMXuDorMaOPRRI3j0DkDhJ4g1Z6wZ3kW28oUUAvC85XNkcZJ+ZCs0YabzA094uJa1gaI0SF2anG9p9+9TYPzpmfmQYNI12Z2+DJhw9rHfgb301s62gDzmZ67MCVsDMJz666l8Yby6RyVc3kK5IuCzV86hsI5MXnOc03j+/mHS2/Hrgl0FZ143iHADU9w0Q7GxIj4NXwjWDq682hnu6SXzYTaLx5hJlXee9rPFoNXPh6CHwU2Kj/59h+QbZBYMJHQlhegAAAABJRU5ErkJggg==", "s9": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAYAAADtc08vAAAAAXNSR0IArs4c6QAAAMhJREFUKJGlkqEOglAUhj8c9aa7uZHZeAY7BjtRG8lmYrgZLZp5AIO8g93iI7i7udGw3MQDYFAGDIdw/dq92/+df2fHAkr+wAbQWhuFpZRvQYVSalDQ87x2gyZCiN5wURStd0uw3h4AOCd7HMfphPM87/xZQKm1xg9CNnFMlmXcsye71fyrpImUshYA+EHY2+CnQCmFEGJQuBK0dtDc7lDsarIpNsD0mowOulEKwMRkqhulnC63usFYHscl7mJm3qCSwOeQTCUAL3wwOXywCZaYAAAAAElFTkSuQmCC", "s104": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAM1JREFUOI1jZGBg+M9AAWBhYGBgmDVrOlzg6tn7DNrGilgVo8ulpWUyMGFTcPXsfZya0eVQDIApwOYCXHIsMNPRbcMF8LrgP9MbuA0wNrIYjI/TgPDkMIYr50+jsJHFrpw/zaBvJotiACMDA8P//PQynE7GBybO7IKEAcx5pABYWLAgC/jrPYMrOH+WB0WDofEXOHvjJSk4m4UBDaBrRBdHNgjDgPNneTAUYDWIFcFHiQVCmgm6ANmpZBmw8ZIUivOwgUeX+FD4jAwUZmcAFBBdspOKuzMAAAAASUVORK5CYII=", "s15": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAOCAYAAAASVl2WAAAAAXNSR0IArs4c6QAAAKJJREFUGJWVkL0NwjAUhL8XeQA3VBElDTVFFkByzxIMQMseWQBRUSJFYg8qWveOGMAUzov8U3GN5bvT3XsPWsT809XicB0KkxoiLaIaohtdY1KuqFjiVQRANM6NjuADALa3TOcJQLpsMLb3D7a3BB80LVU8zQ6A7+WwpihnAGYfuLFJZSa982I0OowSNepD/W9Y13yfjoWwf7wARDKuPrcA/AA0FTEf/bxMSQAAAABJRU5ErkJggg==", "s302": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAALCAYAAABGbhwYAAAAAXNSR0IArs4c6QAAAI5JREFUGJVjZEAF/9H4jBgMBgaG/2/WN6OoEgmshathRFf0/c1HBgYGBgZOEX4UxYzoimAKkNkigbUMTAxEAiYGBgaGrWvvw637/uYjimkwObgbF8YkMXgHK6KYsnXtfYb4JfPgbmRggAbLwpgkFIVQRcgGMvyf4BX7H6oBjpHEsHqGkQE1fDEAeqygiAEAfvQ39D20ZR4AAAAASUVORK5CYII=", "s268": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAALCAYAAABGbhwYAAAAAXNSR0IArs4c6QAAAK9JREFUGJVjZEAF/9H4jBgMBgaG/zsKbBmklFTgAnp58+FqmJBNevL6LYpxlyYlwuUYGRgY/kMFGBgYGBhOnTzJYGZujsJPWXoNbiIcICt6du8OnM/EwMDA8PrGB3T1DAwMDAxSSipwOZhn/qdp8jHkZAajKHx94wOD87T1DAwMDIxwhQwMDAwTXVUYdFR14QqhipANZPjf6qr5H6oBjpHEMD0D1c2IRRwO0GMFRQwA+OI2GDa7m1MAAAAASUVORK5CYII=", "s2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAAXNSR0IArs4c6QAAAH5JREFUSIljZICA/wwDAxgZGRgY/k/wimXwdfhHV5s3H2BiKNi2mIGJgYGBISZVja6WI9vJRHeb0cCoA0YdMOqAAXcACwMDA8OS2bcYYlI16Grxktm3EA5AFqA3GPAoYITS/yd4xaJIFGxbTFWLcJjPyIgkhl4lMzJQF2A1HwD4+RoiNyC6wQAAAABJRU5ErkJggg==", "s154": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAPCAYAAADQ4S5JAAAAAXNSR0IArs4c6QAAAM9JREFUKJGdkj0OglAQhD8INyAx8QQWRhvsLGjBO5hoY6wsPIqljZ5CaQmxE01USmKpMeEKYMGPPAQMTrW7b2Z3dvMkRESUQ0oDpfhyOFpCPhwYQv4l8E73iiHliMbzZWYriQWbcqN2iaWyRYu1LJeAaDZZoWsqbXnP5trC6GoAWJ7LtPfiEZrYbsB6u4gt6ZoKwCM0AXieHZ5nR6ilHAXAdoOskHYHyB/UdoOPwL85dGS1dln/FgtkgFG/npznND7rf4LdJfhJTDkS1T+0FG9Iqz0c09k29AAAAABJRU5ErkJggg==", "s25": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAANhJREFUOI1jZICA/wxkAhYY4+3btyRrFhYWZmAipMg5OJk4FzAwMDDcunULRTKzspOhoKKCwTk4mWF6ezmKnJqaGqYBDAwMDLy8vCj8Bw8eYIh//vwZzsbqBUlJSQZJSUmGJVNaGG48eMGwZEoLXAwd4A0DSUlJhpoYF6waYYARSv8nNxbgYYAegMQCuAGqL/aQpHHJ7FuoBny8fYNEu5mQSAYGBuWypSQagDDm/4IdJxgiKiaQZQgLAwMDY4KHxX8GBgaGu13RZLmAgVzNDAxI6YAs3QwMDADAbTat3K8jYAAAAABJRU5ErkJggg==", "s471": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAYCAYAAADzoH0MAAAAAXNSR0IArs4c6QAAAFtJREFUOI1jZGBg+M9AAWBhYGBgeLO+mSzNIoG1DEyU2M7AwDBqwKgBowaMGjCIDGBhYGBg2Lr2PtkGMDIglcoTvGIZGBgYGAq2LcaqGJs8I5I8qcU7IwMDAwMAjX4OcUdwQvsAAAAASUVORK5CYII=", "s262": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAYAAABoMT8aAAAAAXNSR0IArs4c6QAAANRJREFUOI1jZICA/wzkAUYWGOvN+maSdIoE1jIwMDAwwA24e/sFWU5gIksXNQ1gwSVxiVMDha/3/QbxBlzi1GAIiopCEVu3bBlOQxgYGBj+//n3//+ff///r1+/Hs5Gx8hyDNCoZ4QZkDjnME7TsYH5KbYMDAwMjEwMDAz/zaJmk6SZgYGBAarn/8BH46gBowZQxQB4du4WPkCSRi8GCVQDSC8TIQYwMTAwMHy+cYtEzQg9VAlExuvnuknWCNXDiFImmpdNJUrzya5sOBtepJHsBKh+AGvNWiC5yvplAAAAAElFTkSuQmCC", "f68": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAABZJREFUGJVjPFFR+Z8BD2DCJzl8FAAA0AcCyJWq7w0AAAAASUVORK5CYII=", "f1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAACZJREFUGJVjXNFh8Z8BD2DCJ0knBSwaFgH4Fexfuhi/AmkTN7wKAFUhBcmjGTkDAAAAAElFTkSuQmCC", "f21": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAEBJREFUGJVjTPIz/K8r/osBF2Bxs2JnYGBgx61AwyIApyQDAwMDy/6li/ErkFTmxa/g+d3PeBUwXjjQ8Z8iNwAAuPgOnES+IZAAAAAASUVORK5CYII=", "f49": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAC5JREFUGJVj3H/q3H8GPICFgYGBQV5aHKvkmau3GJjw6WZgYBgUClgYGCCuxQUA8EMIsS+l9ogAAAAASUVORK5CYII=", "f129": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAABZJREFUGJVjbD5Z/58BD2DCJzl8FAAA4igC2vVfMtIAAAAASUVORK5CYII=", "f37": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAC9JREFUGJVj3H/q3H8GPICFgYGB4R8HC1bJty/eMjDh083AwDAoFLAwMEBciwsAANM1CficFE5uAAAAAElFTkSuQmCC"};
+var SPR={"estante":"s113","secretária":"s307","lareira":"s270","armário":"s99","poltrona":"s239","cadeira":"s46","mesa":"s308","bengaleiro":"s285","aparador":"s117","lava-loiça":"s9","fogão":"s104","vaso":"s15","vime":"s302","banco":"s268","balcão":"s2","mala":"s154","lavatório":"s25","mesinha":"s471","cabide":"s285","cama":"s262"};
+
+/* =====================================================================
+   CASOS
+   ===================================================================== */
+var CASES=[];
+
+/* ---------------- CASO 001 ---------------- */
+CASES.push({
+ id:"c001", num:"001", title:"O Assassinato na Mansão Blackwood", tag:"Caso de aprendizagem", level:"Fácil",
+ file:"Processo n.º 001/1934 · Polícia de Sussex",
+ intro:"Sábado, 17 de Novembro de 1934. Edmund Blackwood aparece morto na biblioteca da sua mansão, depois de um jantar. Na casa estavam cinco pessoas. A polícia acha que foi uma queda. Tu não.",
+ planTitle:"Planta às 21h45",
+ extraRules:["<b>Dica para começar:</b> procura quem só tem uma célula possível."],
+ people:[
+  {id:"Ed",c:"Ed",name:"Edmund Blackwood",short:"Edmund",age:68,role:"A vítima. Dono da mansão, industrial reformado.",victim:true},
+  {id:"Ar",c:"Ar",name:"Arthur Blackwood",short:"Arthur",age:34,role:"Sobrinho e herdeiro de Edmund. Vive à custa do tio. Único fumador da casa."},
+  {id:"Vi",c:"Vi",name:"Victoria Hale",short:"Victoria",age:45,role:"Sócia de Edmund. A única pessoa, além dele, com acesso às contas da sociedade."},
+  {id:"El",c:"El",name:"Eleanor Vance",short:"Eleanor",age:29,role:"Secretária de Edmund há dois anos."},
+  {id:"Th",c:"Th",name:"Dr. Thomas Reed",short:"Thomas",age:41,role:"Médico de Edmund. Casado."},
+  {id:"He",c:"He",name:"Henderson",short:"Henderson",age:58,role:"Mordomo, ao serviço de Edmund há trinta anos."}
+ ],
+ div:{B:"Biblioteca",E:"Escritório",S:"Sala de jantar",C:"Cozinha",F:"Sala de fumo"},
+ map:["BBBEEE","BBBEEE","SSSSFF","SSSSFF","CCCCFF","CCCCFF"],
+ cells:{
+  "0,0":["o","estante"],"0,1":["o","estante"],"0,2":["f","escadote"],"0,3":["o","secretária"],
+  "1,0":["s","poltrona"],"1,2":["o","lareira"],"1,3":["s","cadeira"],"1,5":["o","armário"],
+  "2,0":["s","cadeira"],"2,1":["o","mesa"],"2,2":["o","mesa"],"2,3":["s","cadeira"],"2,4":["o","bengaleiro"],
+  "3,0":["o","aparador"],"3,1":["s","cadeira"],"3,2":["s","cadeira"],"3,5":["o","vaso"],
+  "4,0":["o","lava-loiça"],"4,4":["s","vime"],
+  "5,0":["o","fogão"],"5,2":["o","mesa"],"5,3":["s","banco"],"5,4":["f","terraço"],"5,5":["o","vaso"]},
+ long:{"0,2":"chão, ao pé do escadote","1,3":"cadeira da secretária","2,0":"cadeira (cabeceira)","4,4":"cadeira de vime","5,4":"chão, porta do terraço"},
+ win:{"1,0":"L","0,5":"R"}, door:{"5,4":"B"},
+ weapons:{B:{cell:"1,2",name:"Atiçador"},E:{cell:"0,3",name:"Castiçal de bronze"},S:{cell:"3,0",name:"Faca de trinchar"},C:{cell:"5,2",name:"Cutelo"},F:{cell:"2,4",name:"Bengala de prata"}},
+ motivos:["Herança","Desfalque","Chantagem","Dívida","Despedimento"],
+ sol:{autor:"Vi",arma:"Castiçal de bronze",motivo:"Desfalque",plant:{Vi:[0,5],Ed:[1,3],El:[2,0],Th:[3,2],He:[4,1],Ar:[5,4]}},
+ cards:[
+  {id:"K1",type:"decl",about:["He"],title:"Henderson, o mordomo",refs:{cells:["4,0"]},text:"«Depois do jantar estive sempre ao lado do lava-loiça, a lavar os copos.»"},
+  {id:"K2",type:"decl",about:["Th"],title:"Dr. Thomas Reed",refs:{div:"S"},text:"«Fiquei sentado na sala de jantar a acabar o meu vinho.»"},
+  {id:"K3",type:"decl",about:["El"],title:"Eleanor Vance",refs:{cells:["1,0"]},text:"«Estive sentada na poltrona da biblioteca, a ler.»"},
+  {id:"K4",type:"decl",about:["Vi"],title:"Victoria Hale",refs:{div:"C"},text:"«Estive na cozinha, a beber um chá com o Henderson.»"},
+  {id:"K5",type:"decl",about:["Ar"],title:"Arthur Blackwood",refs:{div:"F"},text:"«Estive de pé na sala de fumo, a fumar um charuto. A cadeira de vime era da gata.»"},
+  {id:"K6",type:"prova",about:["El","Ed"],title:"Exame da biblioteca",refs:{cells:["1,0"]},text:"A manta da poltrona está dobrada, intacta: ninguém se sentou nela. O tapete tem marcas de arrasto: o corpo foi trazido de outra divisão."},
+  {id:"K7",type:"prova",about:["Vi","He"],title:"Exame da cozinha",refs:{div:"C"},text:"No chão molhado só há pegadas de Henderson. A chaleira está fria e não há chávenas usadas."},
+  {id:"K8",type:"prova",about:["El","Th"],title:"Bilhete na mala de Eleanor",refs:{cells:["3,0"]},text:"«Depois do jantar fica no teu lugar, ao lado do aparador. Quero falar contigo. — T.» Confrontada, Eleanor admite: estava sentada ao lado do aparador."},
+  {id:"K9",type:"prova",about:["Vi"],title:"Roupa de Victoria",refs:{cells:["1,0","0,5"]},text:"A manga do vestido tem tinta fresca de um caixilho de janela e gotas de chuva. Só choveu na hora do crime: Victoria estava em frente a uma janela aberta."},
+  {id:"K10",type:"prova",about:["Ed"],title:"Relatório do médico-legista",refs:null,text:"Edmund foi morto com um golpe de um objecto pesado e rombo, e depois arrastado até à biblioteca. Não morreu onde foi encontrado."},
+  {id:"K11",type:"prova",about:["Vi","Ar","He"],title:"Agenda de Edmund",refs:null,motive:true,text:"Para amanhã: «Novo testamento: o meu herdeiro vai ter uma surpresa.» «Contas da sociedade: falta dinheiro, e só uma pessoa além de mim mexe nelas. Polícia?» «Despedir quem me serve há trinta anos.»"}
+ ],
+ deal:{2:{1:["K1","K3","K7","K9","K11"],2:["K2","K4","K5","K6","K8","K10"]},
+       3:{1:["K1","K6","K9","K11"],2:["K2","K4","K8"],3:["K3","K5","K7","K10"]},
+       4:{1:["K1","K6","K11"],2:["K2","K7","K10"],3:["K3","K9","K5"],4:["K4","K8"]}},
+ hints:["Começa por quem tem uma posição muito precisa. Ao lado do lava-loiça só há uma célula que se pode ocupar.",
+  "Há declarações desmentidas por provas. Procura os pares: alguém diz que esteve num sítio e uma prova mostra que não.",
+  "Com Henderson, Eleanor, Thomas e Arthur colocados, vê que linhas e colunas sobram. Em que divisão ficam essas células?",
+  "Victoria estava em frente a uma janela. Só há duas janelas na planta, e uma delas está numa coluna já ocupada."],
+ reveal:{title:"Victoria Hale matou Edmund Blackwood",
+  lead:"No escritório, com o castiçal de bronze, às 21h45. Edmund tinha descoberto que ela desviava dinheiro da sociedade e ia chamar a polícia.",
+  steps:["Henderson: ao lado do lava-loiça (A5) só há uma célula livre, B5.",
+   "Eleanor mentiu: ninguém se sentou na poltrona. O bilhete põe-na sentada ao lado do aparador: A3 ou B4. A coluna B já está ocupada, logo A3.",
+   "Thomas, sentado na sala de jantar: a única cadeira livre fora da linha 3 e da coluna B é C4.",
+   "Arthur, de pé na sala de fumo: as linhas 3, 4 e 5 já estão ocupadas, logo E6.",
+   "Victoria mentiu: só há pegadas de Henderson na cozinha. A tinta e a chuva põem-na numa janela: A2 ou F1. A coluna A está ocupada, logo F1.",
+   "Sobra D2 para Edmund. Victoria é a única pessoa com ele no escritório, e a arma do escritório é o castiçal."],
+  story:"Depois do jantar, Edmund foi para o escritório. Victoria seguiu-o. Ele contou-lhe que tinha descoberto o desfalque. Às 21h45, enquanto chovia, Victoria estava à janela aberta, encostada ao caixilho acabado de pintar. Pegou no castiçal e atingiu-o. Limpou-o, arrastou o corpo para a biblioteca, para parecer uma queda do escadote, e juntou-se aos outros para o café. Eleanor mentiu para esconder a relação com Thomas. Arthur, o herdeiro, era o suspeito óbvio, mas esteve sempre na sala de fumo."}
+});
+
+/* ---------------- CASO 002 ---------------- */
+CASES.push({
+ id:"c002", num:"002", title:"Morte no Expresso do Norte", tag:"Novo: pistas relativas", level:"Médio",
+ file:"Processo n.º 002/1935 · Polícia de Coimbra",
+ intro:"Sexta-feira, 8 de Março de 1935. No Expresso do Norte, entre Lisboa e o Porto, o comendador Álvaro Teixeira aparece morto no corredor do vagão-cama. O comboio não parou desde o Entroncamento. Nas carruagens da frente viajavam cinco pessoas. Uma delas mente.",
+ planTitle:"Planta às 22h15",
+ extraRules:["<b>Novo neste caso: pistas relativas.</b> «Duas colunas à direita de X» só fala de colunas: a pessoa pode estar noutra linha. «Duas linhas abaixo de X» só fala de linhas.",
+  "Uma declaração desmentida por uma prova não dá nenhuma informação: ignora-a.",
+  "Camas e poltronas contam como assentos. Quem está «de pé» não está numa célula com assento."],
+ people:[
+  {id:"Al",c:"Ed",name:"Comendador Álvaro Teixeira",short:"Álvaro",age:61,role:"A vítima. Industrial do Porto, com muito dinheiro investido através do seu advogado.",victim:true},
+  {id:"Am",c:"El",name:"D. Amélia Sarmento",short:"Amélia",age:52,role:"Viúva de um antigo sócio de Álvaro. Diz que ele arruinou o marido."},
+  {id:"Be",c:"He",name:"Bernardo Pinto",short:"Bernardo",age:38,role:"Revisor do comboio."},
+  {id:"Ru",c:"Ar",name:"Capitão Rui Valadares",short:"Rui",age:47,role:"Oficial reformado. Deve dinheiro a Álvaro desde uma noite de cartas."},
+  {id:"In",c:"Th",name:"Inês Lacerda",short:"Inês",age:27,role:"Jornalista. Andava a investigar os negócios de Álvaro."},
+  {id:"Fa",c:"Vi",name:"Dr. Fausto Rebelo",short:"Fausto",age:55,role:"Advogado de Álvaro. Gere o dinheiro dos clientes."}
+ ],
+ div:{R:"Restaurante",B:"Bar",S:"Salão",K:"Compartimento 7",C:"Compartimento 8"},
+ map:["RRRRRR","RRRRRR","BBBSSS","BBBSSS","KKKCCC","KKKCCC"],
+ cells:{
+  "0,0":["s","cadeira"],"0,1":["o","mesa"],"0,2":["s","cadeira"],"0,3":["s","cadeira"],"0,4":["o","mesa"],"0,5":["s","cadeira"],
+  "1,5":["o","balcão"],
+  "2,0":["s","banco"],"2,1":["o","balcão"],"2,2":["s","banco"],"2,3":["s","poltrona"],"2,4":["o","mesa"],"2,5":["s","poltrona"],
+  "3,2":["s","poltrona"],"3,5":["o","estante"],
+  "4,0":["s","cama"],"4,2":["o","mala"],"4,4":["o","mesinha"],"4,5":["o","cabide"],
+  "5,0":["s","cama"],"5,2":["o","lavatório"],"5,3":["s","cama"],"5,4":["s","cama"]},
+ long:{},
+ win:{"1,0":"L","3,0":"L","0,5":"R","2,5":"R","5,5":"R"}, door:{},
+ weapons:{R:{cell:"1,5",name:"Faca do chef"},B:{cell:"2,1",name:"Garrafa de conhaque"},S:{cell:"2,4",name:"Pisa-papéis de bronze"},K:{cell:"4,2",name:"Corda da mala"},C:{cell:"4,5",name:"Bengala de ébano"}},
+ motivos:["Herança","Fraude","Chantagem","Dívida","Vingança"],
+ sol:{autor:"Fa",arma:"Bengala de ébano",motivo:"Fraude",plant:{Am:[0,2],Be:[1,0],In:[2,5],Ru:[3,1],Fa:[4,3],Al:[5,4]}},
+ cards:[
+  {id:"K1",type:"decl",about:["Be"],title:"Bernardo Pinto, o revisor",refs:{div:"R"},text:"«Estava no restaurante, a picar os bilhetes.»"},
+  {id:"K2",type:"decl",about:["Be","Am"],title:"Bernardo Pinto, o revisor",refs:null,text:"«A D. Amélia estava duas colunas à minha direita.»"},
+  {id:"K3",type:"decl",about:["Am"],title:"D. Amélia Sarmento",refs:{div:"R"},text:"«Estava sentada no restaurante, a acabar o jantar.»"},
+  {id:"K4",type:"decl",about:["Ru"],title:"Capitão Rui Valadares",refs:{div:"B"},text:"«Estive no bar, a beber um conhaque.»"},
+  {id:"K5",type:"decl",about:["In","Am"],title:"Inês Lacerda",refs:null,text:"«Eu estava exactamente duas linhas abaixo da D. Amélia.»"},
+  {id:"K6",type:"decl",about:["Fa"],title:"Dr. Fausto Rebelo",refs:{div:"B"},text:"«Estive no bar, a beber um conhaque com o capitão.»"},
+  {id:"K7",type:"prova",about:["Fa","Ru"],title:"O copo do bar",refs:null,text:"No bar só há um copo usado, com as impressões do capitão. O Dr. Rebelo não bebeu com ele: a declaração dele é falsa."},
+  {id:"K8",type:"prova",about:["Fa"],title:"Atestado médico",refs:null,text:"O Dr. Rebelo tem um problema grave nas costas: não se pode sentar nem deitar. Esteve sempre de pé."},
+  {id:"K9",type:"prova",about:["Fa","Am"],title:"Reconstrução da polícia",refs:null,text:"Pelas marcas de graxa no chão, o Dr. Rebelo estava uma coluna à direita de D. Amélia."},
+  {id:"K10",type:"prova",about:["Al"],title:"Relatório do médico-legista",refs:null,text:"Álvaro foi atingido na cabeça com um objecto comprido e pesado. O corpo foi encontrado no corredor, mas foi arrastado: não morreu lá."},
+  {id:"K11",type:"prova",about:["Fa","Ru","Am"],title:"Carta no bolso de Álvaro",refs:null,motive:true,text:"«Rebelo: sei que desviou o dinheiro dos meus investimentos. Em Coimbra entrego tudo à polícia.»"}
+ ],
+ deal:{2:{1:["K1","K3","K6","K8","K11"],2:["K2","K4","K5","K7","K9","K10"]},
+       3:{1:["K1","K5","K7","K11"],2:["K2","K6","K8","K10"],3:["K3","K4","K9"]},
+       4:{1:["K1","K6","K11"],2:["K2","K7","K10"],3:["K3","K8","K9"],4:["K4","K5"]}},
+ hints:["Amélia está sentada no restaurante. Repara em que linha ficam todas as cadeiras do restaurante.",
+  "Inês está duas linhas abaixo de Amélia. Bernardo está no restaurante, mas a linha de Amélia já está ocupada.",
+  "Fausto está uma coluna à direita de Amélia e não se pode sentar nem deitar. Que linhas lhe sobram, e que células dessas linhas não têm assento nem obstáculo?",
+  "Com Fausto colocado, ficas a saber onde estão Amélia e Bernardo. Inês e Rui passam a ter uma única célula possível."],
+ reveal:{title:"O Dr. Fausto Rebelo matou Álvaro Teixeira",
+  lead:"No compartimento 8, com a bengala de ébano, às 22h15. Álvaro tinha descoberto que o advogado lhe desviava o dinheiro dos investimentos.",
+  steps:["Amélia está sentada no restaurante: todas as cadeiras do restaurante estão na linha 1.",
+   "Inês está duas linhas abaixo de Amélia, logo na linha 3. Bernardo está no restaurante e a linha 1 está ocupada, logo na linha 2.",
+   "Amélia está duas colunas à direita de Bernardo, por isso não pode estar em A1. Fausto está uma coluna à direita de Amélia, por isso ela também não pode estar em F1. Sobram C1 e D1.",
+   "Rui está no bar, nas linhas 3 ou 4. A linha 3 é de Inês, logo Rui está na linha 4.",
+   "Fausto está de pé e as linhas 1 a 4 estão ocupadas. Na coluna D, D5 é chão livre e D6 é uma cama. Na coluna E, E5 é uma mesinha e E6 é uma cama. Só D5 serve: Fausto em D5, Amélia em C1, Bernardo em A2.",
+   "Sobram as colunas B, E e F. Inês, na linha 3, só pode estar em F3. Rui, no bar e na linha 4, fica em B4.",
+   "Álvaro fica em E6, no compartimento 8, sozinho com Fausto. A arma do compartimento 8 é a bengala de ébano."],
+  story:"Às 22h15, enquanto os outros jantavam ou bebiam, Fausto foi ao compartimento de Álvaro. Álvaro, deitado, mostrou-lhe a carta em que ameaçava denunciá-lo. Fausto pegou na bengala que estava no cabide e atingiu-o. Arrastou o corpo para o corredor, para parecer um assalto, e disse que tinha estado no bar com o capitão. Mas no bar só havia um copo. Amélia tinha razões para odiar Álvaro e o capitão devia-lhe dinheiro: suspeitos óbvios, mas inocentes."}
+});
+
+var IMG={c001:{Ed:"p13",Ar:"p17",Vi:"p2",El:"p16",Th:"p15",He:"p32"},c002:{Al:"p3",Am:"p14",Be:"p33",Ru:"p1",In:"p18",Fa:"p32"}};
+var FLOORS={c001:{B:"f68",E:"f1",S:"f21",C:"f49",F:"f129"},c002:{R:"f68",B:"f1",S:"f129",K:"f21",C:"f37"}};
+CASES.forEach(function(c){c.people.forEach(function(p){p.img=IMG[c.id][p.id];});c.floors=FLOORS[c.id];});
+
+/* =====================================================================
+   MOTOR
+   ===================================================================== */
+var C,PEOPLE,PBY,SUS,DIV,MAP,CELLS,LONG,WIN,DOOR,WEAPONS,WCELL,MOTIVOS,SOL,CARDS,CBY,HINTS;
+var COLS="ABCDEF";
+function loadCase(id){
+  C=CASES.filter(function(c){return c.id===id;})[0]; if(!C) return false;
+  PEOPLE=C.people; PBY={}; PEOPLE.forEach(function(p){PBY[p.id]=p;});
+  SUS=PEOPLE.filter(function(p){return !p.victim;}).map(function(p){return p.id;});
+  DIV=C.div; MAP=C.map; CELLS=C.cells; LONG=C.long; WIN=C.win; DOOR=C.door; WEAPONS=C.weapons;
+  WCELL={}; Object.keys(WEAPONS).forEach(function(d){WCELL[WEAPONS[d].cell]=WEAPONS[d].name;});
+  MOTIVOS=C.motivos; SOL=C.sol; CARDS=C.cards; CBY={}; CARDS.forEach(function(c){CBY[c.id]=c;}); HINTS=C.hints;
+  return true;
+}
+function pc(id){return "var(--p-"+PBY[id].c+")";}
+function av(id,cls){var p=PBY[id];return p.img?'<img class="'+(cls||"av")+(p.victim?' vic':'')+'" alt="" src="'+ASSETS[p.img]+'" style="--pc:'+pc(id)+'">':'';}
+function tokHTML(id){var p=PBY[id];return p.img?'<span class="tok pic'+(p.victim?' victim':'')+'" style="--pc:'+pc(id)+'"><img alt="" src="'+ASSETS[p.img]+'"></span>':'<span class="tok'+(p.victim?' victim':'')+'" style="--pc:'+pc(id)+'">'+id+'</span>';}
+function cellType(r,c){var k=r+","+c;return CELLS[k]?CELLS[k][0]:"f";}
+function cellLabel(r,c){var k=r+","+c;return CELLS[k]?CELLS[k][1]:"";}
+function coord(r,c){return COLS[c]+(r+1);}
+function describe(r,c){
+  var k=r+","+c,t=cellType(r,c),base=LONG[k]||(t==="f"?"chão livre":cellLabel(r,c));
+  var s=coord(r,c)+" · "+DIV[MAP[r][c]]+" · "+(t==="o"?"obstáculo ("+base+")":t==="s"?"assento ("+base+")":base);
+  if(WIN[k]) s+=" · em frente a uma janela";
+  if(WCELL[k]) s+=" · arma possível: "+WCELL[k].toLowerCase();
+  return s;
+}
+
+/* ---------- estado ---------- */
+var CURKEY="am-v3-current";
+function fresh(){return {mode:null,plant:{},marks:{},wrong:0,hints:0,solved:false,start:Date.now(),end:null,result:null,assist:false,seen:{}};}
+function loadState(id){try{var raw=localStorage.getItem("am-v3-"+id);if(raw){var o=JSON.parse(raw);if(o&&o.plant) return Object.assign(fresh(),o);}}catch(e){} return fresh();}
+var S=fresh();
+function save(){if(!C) return;try{localStorage.setItem("am-v3-"+C.id,JSON.stringify(S));localStorage.setItem(CURKEY,C.id);}catch(e){}}
+function openCase(id){if(!loadCase(id)) return; S=loadState(id); try{localStorage.setItem(CURKEY,id);}catch(e){} setupN=null; selTool=null; lastCell=null;}
+function closeCase(){C=null; try{localStorage.removeItem(CURKEY);}catch(e){}}
+function hand(){if(!S.mode) return []; var ids=S.mode.n===1?CARDS.map(function(c){return c.id;}):(C.deal[S.mode.n][S.mode.p]||[]); return ids.map(function(id){return CBY[id];});}
+
+/* ---------- UI base ---------- */
+var main=document.getElementById("main"),nav=document.getElementById("nav"),ov=document.getElementById("ov"),panel=document.getElementById("panel");
+var ICONS={
+ caso:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h6l2 2h10v10H3z"/></svg>',
+ pistas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="11" height="15" rx="1"/><path d="M8 3h11v15"/></svg>',
+ planta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>',
+ acusar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 20l6-6M9 6l9 9M12 3l9 9-3 3-9-9z"/></svg>'
+};
+var VIEWS=[["caso","Caso"],["pistas","Pistas"],["planta","Planta"],["acusar","Acusar"]];
+var view="caso",selTool=null,lastCell=null,setupN=null;
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+var toastT;function toast(m){var t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true;},3000);}
+
+function renderNav(){
+  var ready=C&&S.mode;
+  nav.hidden=!ready;
+  if(!ready){nav.innerHTML="";return;}
+  var unseen=hand().some(function(c){return !S.seen[c.id];});
+  nav.innerHTML=VIEWS.map(function(v){return '<button type="button" data-v="'+v[0]+'"'+(view===v[0]?' aria-current="page"':'')+'>'+ICONS[v[0]]+'<span>'+v[1]+'</span>'+(v[0]==="pistas"&&unseen?'<span class="dot"></span>':'')+'</button>';}).join("");
+}
+nav.addEventListener("click",function(e){var b=e.target.closest("button[data-v]");if(b) go(b.getAttribute("data-v"));});
+function go(v){if(location.hash!=="#"+v) location.hash=v; else render();}
+function fromHash(){var h=location.hash.replace("#","");view=VIEWS.some(function(v){return v[0]===h;})?h:"caso";if(!C||!S.mode) view="caso";render();try{window.scrollTo(0,0);}catch(e){}}
+window.addEventListener("hashchange",fromHash);
+function render(){
+  document.getElementById("hsub").textContent=C?("Caso "+C.num+" — "+C.title):"Arquivo de casos";
+  document.getElementById("helpBtn").hidden=!(C&&S.mode&&!S.solved);
+  renderNav();
+  if(!C) return vArquivo();
+  ({caso:vCaso,pistas:vPistas,planta:vPlanta,acusar:vAcusar})[view]();
+}
+
+ov.addEventListener("click",function(e){
+  if(e.target===ov||e.target.closest("[data-close]")){ov.hidden=true;return;}
+  if(e.target.closest("[data-hint]")){S.hints++;save();var h=HINTS[Math.min(S.hints-1,HINTS.length-1)];
+    panel.innerHTML='<div class="bar"><h2>Ajuda n.º '+S.hints+'</h2><button class="btn ghost" type="button" data-close>Fechar</button></div><div class="body"><p>'+h+'</p></div>';}
+  if(e.target.closest("[data-reset]")){S=fresh();save();ov.hidden=true;setupN=null;view="caso";location.hash="caso";render();}
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!ov.hidden) ov.hidden=true;});
+document.getElementById("helpBtn").addEventListener("click",function(){
+  panel.innerHTML='<div class="bar"><h2>Pedir ajuda</h2><button class="btn ghost" type="button" data-close>Fechar</button></div><div class="body">'+
+   '<p>Cada ajuda dá uma dica um pouco mais concreta e retira os 10 pontos de «sem ajudas».</p><p>Ajudas pedidas: <b>'+S.hints+'</b>.</p></div><div class="row"><button class="btn" type="button" data-hint>Mostrar ajuda</button></div>';
+  ov.hidden=false;});
+
+/* ---------- ARQUIVO ---------- */
+function vArquivo(){
+  main.innerHTML='<section class="folder"><div class="no">Arquivo Morto</div><h1>Processos por resolver</h1><p>Escolhe um caso. Cada um acrescenta uma regra nova; começa pelo primeiro.</p></section>'+
+   '<div class="cards" style="margin-top:1rem">'+CASES.map(function(c){
+     var st=null;try{var raw=localStorage.getItem("am-v3-"+c.id);if(raw) st=JSON.parse(raw);}catch(e){}
+     var status=st&&st.solved?("Resolvido · "+(st.result?st.result.total:"")+" pontos"):st&&st.mode?"Em investigação":"Por abrir";
+     return '<article class="card" style="--pc:var(--folder)"><div class="hd"><b>Caso '+c.num+' · '+c.title+'</b><span class="pill decl">'+c.level+'</span></div>'+
+       '<p class="small">'+c.tag+'</p><p class="small muted">'+status+'</p><div class="act"><button class="btn" type="button" data-case="'+c.id+'">'+(st&&st.mode&&!st.solved?"Continuar":"Abrir")+'</button></div></article>';}).join("")+'</div>';
+  main.querySelectorAll("[data-case]").forEach(function(b){b.onclick=function(){openCase(b.getAttribute("data-case"));view="caso";location.hash="caso";render();};});
+}
+
+/* ---------- CASO ---------- */
+function vCaso(){
+  var intro='<p><button class="btn ghost" type="button" id="toArq">‹ Arquivo de casos</button></p>'+
+   '<section class="folder"><div class="no">'+C.file+'</div><h1>'+C.title+'</h1><p>'+C.intro+'</p></section>';
+  var rules='<h2>Como se joga</h2><div class="sheet"><ol class="rules">'+
+   '<li>Lê as tuas <b>pistas</b>: declarações dos suspeitos e provas da polícia.</li>'+
+   '<li>Coloca as seis pessoas na <b>planta</b>, onde estavam no momento do crime.</li>'+
+   '<li>Cada linha e cada coluna tem exactamente uma pessoa, incluindo a vítima. Não se pode ocupar obstáculos (tracejado).</li>'+
+   '<li><b>Uma declaração é verdadeira, a não ser que uma prova a desminta.</b> As provas são sempre verdadeiras.</li>'+
+   '<li>A vítima ocupa a única posição que sobra. O culpado é a única pessoa que estava na mesma divisão que ela.</li>'+
+   '<li>Cada divisão tem uma arma possível, marcada a vermelho. A arma do crime é a da divisão da vítima.</li>'+
+   '<li>«Ao lado» é na horizontal ou na vertical, nunca em diagonal. «Em frente a uma janela» é a célula com a janela (linha azul dupla).</li>'+
+   C.extraRules.map(function(r){return '<li>'+r+'</li>';}).join("")+'</ol></div>';
+  if(!S.mode){
+    var n=setupN;
+    main.innerHTML=intro+'<h2>Quantos jogadores?</h2><div class="choice">'+[1,2,3,4].map(function(i){return '<button type="button" data-n="'+i+'" aria-pressed="'+(n===i)+'">'+i+'</button>';}).join("")+'</div>'+
+     (n&&n>1?'<h2>Que jogador és tu?</h2><p class="small muted">Cada pessoa abre o jogo no seu telemóvel, escolhe este caso, o mesmo número de jogadores e um número diferente. Cada um recebe pistas diferentes: só juntando-as se resolve o caso.</p><div class="choice">'+
+       Array.from({length:n},function(_,i){return '<button type="button" data-p="'+(i+1)+'">'+(i+1)+'</button>';}).join("")+'</div>':'')+
+     (n===1?'<p><button class="btn" type="button" data-p="1">Começar a investigação</button></p>':'')+rules;
+    main.querySelectorAll("[data-n]").forEach(function(b){b.onclick=function(){setupN=+b.getAttribute("data-n");vCaso();};});
+    main.querySelectorAll("[data-p]").forEach(function(b){b.onclick=function(){S.mode={n:setupN,p:+b.getAttribute("data-p")};S.start=Date.now();save();go("pistas");};});
+    document.getElementById("toArq").onclick=function(){closeCase();render();};
+    return;
+  }
+  var m=S.mode,placed=Object.keys(S.plant).length;
+  main.innerHTML=intro+
+   (m.n>1?'<p><span class="who">Jogador '+m.p+' de '+m.n+'</span> Tens '+hand().length+' pistas. As outras estão com os teus colegas: falem!</p>':'')+
+   '<div class="sheet"><div class="progress"><div><b>'+placed+'/6</b>na planta</div><div><b>'+S.wrong+'</b>acusações erradas</div><div><b>'+S.hints+'</b>ajudas</div></div></div>'+
+   '<p><button class="btn" type="button" id="goBtn">'+(S.solved?"Ver a revelação":"Continuar")+'</button></p>'+rules+
+   (m.n>1?'<h2>A jogar em grupo</h2><div class="sheet"><ul class="rules"><li>Não mostrem o ecrã: leiam as vossas pistas em voz alta ou digam-nas por palavras vossas.</li><li>Cada um pode fazer a sua planta, ou usam só um telemóvel para a planta.</li><li>Acusam juntos, num só telemóvel.</li><li>Variante competitiva: todos escolhem «1 jogador» e ganha quem resolver primeiro.</li></ul></div>':'')+
+   '<h2>Pessoas</h2><div class="sheet">'+PEOPLE.map(function(p){return '<p class="pp">'+av(p.id)+'<span><b>'+p.name+'</b>, '+p.age+'. '+p.role+'</span></p>';}).join("")+'</div>'+
+   '<p><button class="btn ghost" type="button" id="resetBtn">Recomeçar este caso ou mudar de jogador</button></p>';
+  document.getElementById("toArq").onclick=function(){closeCase();location.hash="caso";render();};
+  document.getElementById("goBtn").onclick=function(){go(S.solved?"acusar":"pistas");};
+  document.getElementById("resetBtn").onclick=function(){
+    panel.innerHTML='<div class="bar"><h2>Recomeçar?</h2><button class="btn ghost" type="button" data-close>Cancelar</button></div><div class="body"><p>Perdes a planta, as acusações e as ajudas deste caso neste telemóvel.</p></div><div class="row"><button class="btn red" type="button" data-reset>Recomeçar</button></div>';
+    ov.hidden=false;};
+}
+
+/* ---------- PISTAS ---------- */
+function cardHTML(c){
+  var p=c.about[0];
+  return '<article class="card" style="--pc:'+pc(p)+'"><div class="hd">'+av(p)+'<b>'+c.title+'</b><span class="pill '+(c.type==="prova"?"prova":"decl")+'">'+(c.type==="prova"?"Prova":"Declaração")+'</span></div>'+
+    '<p>'+c.text+'</p>'+(!c.motive?'<div class="act"><button class="btn ghost" type="button" data-see="'+p+'">Ver na planta</button></div>':'')+'</article>';
+}
+function vPistas(){
+  var h=hand(); h.forEach(function(c){S.seen[c.id]=1;}); save(); renderNav();
+  main.innerHTML='<h2>As tuas pistas</h2>'+(S.mode.n>1?'<p class="small muted">Jogador '+S.mode.p+' de '+S.mode.n+'. Partilha-as com o grupo.</p>':'')+
+    '<p class="small muted">Declaração: verdadeira, a não ser que uma prova a desminta. Prova: sempre verdadeira.</p>'+
+    '<div class="cards">'+h.map(cardHTML).join("")+'</div>';
+  main.querySelectorAll("[data-see]").forEach(function(b){b.onclick=function(){selTool=b.getAttribute("data-see");go("planta");};});
+}
+
+/* ---------- PLANTA ---------- */
+function conflicts(pl){var bad={},ids=Object.keys(pl);ids.forEach(function(a){var p=pl[a];if(cellType(p[0],p[1])==="o") bad[a]=1;
+  ids.forEach(function(b){if(a!==b&&(pl[b][0]===p[0]||pl[b][1]===p[1])){bad[a]=1;bad[b]=1;}});});return bad;}
+function plantHTML(pl,interactive,refs){
+  var who={};Object.keys(pl).forEach(function(id){who[pl[id].join()]=id;});
+  var bad=interactive?conflicts(pl):{},usedR={},usedC={};Object.keys(pl).forEach(function(id){usedR[pl[id][0]]=1;usedC[pl[id][1]]=1;});
+  var h='<div class="plan" role="grid" aria-label="Planta"><div></div>';
+  for(var c=0;c<6;c++) h+='<div class="lab">'+COLS[c]+'</div>';
+  for(var r=0;r<6;r++){ h+='<div class="lab">'+(r+1)+'</div>';
+    for(c=0;c<6;c++){
+      var d=MAP[r][c],k=r+","+c,t=cellType(r,c),cls="cell";
+      if(r===0||MAP[r-1][c]!==d) cls+=" wt"; if(r===5||MAP[r+1][c]!==d) cls+=" wb";
+      if(c===0||MAP[r][c-1]!==d) cls+=" wl"; if(c===5||MAP[r][c+1]!==d) cls+=" wr";
+      if(WIN[k]==="L") cls+=" winL"; if(WIN[k]==="R") cls+=" winR"; if(DOOR[k]) cls+=" doorB";
+      if(refs) refs.forEach(function(rf){if(rf.cells&&rf.cells.indexOf(k)>=0) cls+=" ref"; if(rf.div===d) cls+=" refd";});
+      var id=who[k]; if(id&&bad[id]) cls+=" conflict"; if(interactive&&lastCell===k) cls+=" sel";
+      var first=(r===0||MAP[r-1][c]!==d)&&(c===0||MAP[r][c-1]!==d);
+      var inner=(first?'<span class="dname">'+DIV[d]+'</span>':'')+(t==="o"?'<span class="ob"></span>':t==="s"?'<span class="seat"></span>':'');
+      var spr=SPR[cellLabel(r,c)];
+      if(spr){inner=(first?'<span class="dname">'+DIV[d]+'</span>':'')+'<img class="spr" alt="" src="'+ASSETS[spr]+'">'; if(t==="o") cls+=" isob";}
+      var wn=WCELL[k]?WCELL[k].split(" ")[0].toLowerCase():'';
+      if(wn&&!first) inner+='<span class="wp">'+wn+'</span>';
+      var lb=cellLabel(r,c); if(lb||(wn&&first)) inner+='<span class="lbl">'+lb+(wn&&first?(lb?' · ':'')+wn:'')+'</span>';
+      if(id) inner+=tokHTML(id);
+      else if(interactive&&S.marks[k]) inner+='<span class="mk">✗</span>';
+      else if(interactive&&S.assist&&t!=="o"&&(usedR[r]||usedC[c])) inner+='<span class="ax">✗</span>';
+      var tag=interactive?'button':'div';
+      h+='<'+tag+(interactive?' type="button"':'')+ ' class="'+cls+'" style="--dc:var(--d'+(Object.keys(DIV).indexOf(d))+')'+(C.floors&&C.floors[d]?';background-image:url('+ASSETS[C.floors[d]]+')':'')+'" data-cell="'+k+'" aria-label="'+esc(describe(r,c))+(id?", "+PBY[id].name:"")+'">'+inner+'</'+tag+'>';
+    } }
+  return h+'</div>';
+}
+function vPlanta(){
+  var pl=S.plant,bad=conflicts(pl),nb=Object.keys(bad).length,n=Object.keys(pl).length;
+  var selP=(selTool&&selTool!=="x")?selTool:null;
+  var mine=selP?hand().filter(function(c){return c.about.indexOf(selP)>=0&&!c.motive;}):[];
+  var refs=mine.map(function(c){return c.refs;}).filter(Boolean);
+  var banner;
+  if(selP){
+    banner='<div class="banner" style="--pc:'+pc(selP)+'"><b>'+PBY[selP].name+'</b>'+
+      (PBY[selP].victim?'<div class="bc">A vítima fica na única posição que sobrar.</div>':'')+
+      mine.map(function(c){return '<div class="bc"><span class="pill '+(c.type==="prova"?"prova":"decl")+'">'+(c.type==="prova"?"Prova":"Declaração")+'</span>'+c.text+'</div>';}).join("")+
+      (!mine.length&&!PBY[selP].victim?'<div class="bc muted">Não tens pistas sobre esta pessoa.'+(S.mode.n>1?' Pergunta aos colegas.':'')+'</div>':'')+
+      (refs.length?'<div class="bc muted small">O sítio referido está assinalado a dourado.</div>':'')+
+      '<div class="bc muted small">Toca numa célula para '+(pl[selP]?'mudar de sítio.':'colocar.')+'</div></div>';
+  } else banner='<div class="banner">'+(selTool==="x"?'Modo marcar: toca numa célula para pôr ou tirar ✗.':'Toca numa pessoa para ver as tuas pistas sobre ela e depois numa célula para a colocar.')+'</div>';
+  main.innerHTML='<h2>'+C.planTitle+'</h2><div class="chips">'+PEOPLE.map(function(p){var at=pl[p.id];
+     return '<button type="button" class="chip" data-tool="'+p.id+'" aria-pressed="'+(selTool===p.id)+'" style="--pc:'+pc(p.id)+'"><span class="tk'+(p.victim?' victim':'')+(p.img?' pic':'')+'">'+(p.img?av(p.id,"tki"):p.id)+'</span>'+p.short+(at?' <span class="co">'+coord(at[0],at[1])+'</span>':'')+'</button>';}).join("")+
+     '<button type="button" class="chip" data-tool="x" aria-pressed="'+(selTool==="x")+'"><span class="tk" style="background:var(--red)">✗</span>Marcar</button></div>'+
+   banner+'<div class="plan-wrap">'+plantHTML(pl,true,refs)+'</div>'+
+   '<div class="info">'+(lastCell?esc(describe(+lastCell.split(",")[0],+lastCell.split(",")[1])):"")+'</div>'+
+   '<p class="status'+(nb?' bad':'')+'">'+n+'/6 na planta.'+(nb?" Há conflitos: duas pessoas na mesma linha ou coluna, ou alguém num obstáculo.":"")+(n===6&&!nb?' Planta completa: podes acusar.':'')+'</p>'+
+   '<label class="toggle"><input type="checkbox" id="assist"'+(S.assist?" checked":"")+'> Riscar automaticamente linhas e colunas ocupadas</label>'+
+   '<div class="row">'+(n===6&&!nb?'<button class="btn" type="button" id="toAcc">Acusar</button>':'')+'<button class="btn ghost" type="button" id="clrP">Limpar a planta</button></div>';
+  main.querySelectorAll("[data-tool]").forEach(function(b){b.onclick=function(){var t=b.getAttribute("data-tool");selTool=(selTool===t?null:t);vPlanta();};});
+  main.querySelectorAll("[data-cell]").forEach(function(b){b.onclick=function(){
+    var k=b.getAttribute("data-cell"),rc=k.split(",").map(Number);lastCell=k;
+    var occ=Object.keys(S.plant).filter(function(id){return S.plant[id].join()===k;})[0];
+    if(selTool&&selTool!=="x"){ if(occ===selTool) delete S.plant[selTool]; else {if(occ) delete S.plant[occ]; S.plant[selTool]=rc; delete S.marks[k];} }
+    else if(occ) delete S.plant[occ]; else {if(S.marks[k]) delete S.marks[k]; else S.marks[k]=1;}
+    save();vPlanta();};});
+  document.getElementById("assist").onchange=function(e){S.assist=e.target.checked;save();vPlanta();};
+  document.getElementById("clrP").onclick=function(){S.plant={};S.marks={};lastCell=null;save();vPlanta();};
+  var ta=document.getElementById("toAcc"); if(ta) ta.onclick=function(){go("acusar");};
+}
+
+/* ---------- ACUSAR ---------- */
+function plantCorrect(){return Object.keys(SOL.plant).every(function(id){return S.plant[id]&&S.plant[id].join()===SOL.plant[id].join();});}
+function sel(id,label,opts,vals,opt){return '<div class="field"><label for="'+id+'">'+label+'</label><select id="'+id+'"><option value="">'+(opt?"Não sei (sem bónus)":"Escolher…")+'</option>'+
+  opts.map(function(o,i){return '<option value="'+esc(vals?vals[i]:o)+'">'+esc(o)+'</option>';}).join("")+'</select></div>';}
+function score(motOk){
+  var rows=[["Caso resolvido (planta, culpado e arma)",60],["Sem acusações erradas",S.wrong?0:20],["Sem ajudas",S.hints?0:10],["Motivo (bónus)",motOk?10:0]];
+  var t=rows.reduce(function(a,r){return a+r[1];},0);
+  var cls=t>=95?"Detective lendário":t>=85?"Investigador excepcional":t>=70?"Detective competente":t>=50?"Investigação inconclusiva":"Caso mal resolvido";
+  return {rows:rows,total:t,cls:cls,mins:Math.max(1,Math.round(((S.end||Date.now())-S.start)/60000))};
+}
+function vAcusar(){
+  if(S.solved) return vRevelacao();
+  var pl=S.plant,n=Object.keys(pl).length,ok=n===6&&!Object.keys(conflicts(pl)).length;
+  if(!ok){main.innerHTML='<h2>Acusação</h2><div class="sheet"><p>Primeiro completa a planta: as seis pessoas colocadas e sem conflitos. Tens '+n+'/6.</p></div><p><button class="btn" type="button" id="gp">Ir para a planta</button></p>';
+    document.getElementById("gp").onclick=function(){go("planta");};return;}
+  main.innerHTML='<h2>Acusação</h2><div class="sheet"><p>A tua planta vai anexada à acusação. Responde de acordo com ela.</p>'+(S.mode.n>1?'<p class="small muted">Em grupo, acusem num só telemóvel, depois de concordarem.</p>':'')+'</div>'+
+   sel("fA","Quem matou "+PBY[PEOPLE.filter(function(p){return p.victim;})[0].id].short+"?",SUS.map(function(i){return PBY[i].name;}),SUS)+
+   sel("fW","Com que arma?",Object.keys(WEAPONS).map(function(d){return WEAPONS[d].name;}))+
+   sel("fM","Porquê? (bónus)",MOTIVOS,null,true)+
+   '<div id="vd"></div><div class="row"><button class="btn red" type="button" id="acc">Acusar</button></div>';
+  document.getElementById("acc").onclick=function(){
+    var a=document.getElementById("fA").value,w=document.getElementById("fW").value,m=document.getElementById("fM").value;
+    if(!a||!w){document.getElementById("vd").innerHTML='<div class="verdict bad">Escolhe o culpado e a arma.</div>';return;}
+    if(plantCorrect()&&a===SOL.autor&&w===SOL.arma){S.solved=true;S.end=Date.now();S.result=score(m===SOL.motivo);save();render();try{window.scrollTo(0,0);}catch(e){}}
+    else{S.wrong++;save();document.getElementById("vd").innerHTML='<div class="verdict bad">A acusação não se sustenta: há algo errado na planta, no culpado ou na arma. '+(S.wrong===1?'Perdes os 20 pontos de «sem acusações erradas». ':'')+'Revê as pistas e tenta outra vez.</div>';}
+  };
+}
+function vRevelacao(){
+  var r=S.result||score(false), R=C.reveal;
+  main.innerHTML='<section class="folder"><div class="no">'+C.file+' · Encerrado</div><h1>'+R.title+'</h1><p>'+R.lead+'</p></section>'+
+   '<div class="sheet"><div class="big">'+r.total+'</div><p><b>'+r.cls+'</b> · '+r.mins+' min</p><table class="t score"><tbody>'+
+   r.rows.map(function(x){return '<tr><td>'+x[0]+'</td><td>'+(x[1]>0?'+':'')+x[1]+'</td></tr>';}).join("")+'</tbody></table></div>'+
+   '<h2>A planta</h2><div class="plan-wrap">'+plantHTML(SOL.plant,false,null)+'</div>'+
+   '<h2>Como se resolve</h2><div class="sheet"><ol>'+R.steps.map(function(s){return '<li>'+s+'</li>';}).join("")+'</ol></div>'+
+   '<h2>O que aconteceu</h2><div class="sheet"><p>'+R.story+'</p></div>'+
+   '<div class="row"><button class="btn" type="button" id="arq">Arquivo de casos</button><button class="btn ghost" type="button" id="again">Jogar outra vez</button></div>';
+  document.getElementById("arq").onclick=function(){closeCase();location.hash="caso";render();};
+  document.getElementById("again").onclick=function(){S=fresh();save();setupN=null;go("caso");render();};
+}
+
+/* ---------- arranque ---------- */
+try{var cur=localStorage.getItem(CURKEY); if(cur) openCase(cur);}catch(e){}
+fromHash();
+})();
+
+</script>
+</body>
+</html>
