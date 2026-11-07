@@ -4,6 +4,8 @@ Jogo de investigação criminal e dedução para telemóvel. Cada caso é um cri
 
 Joga-se sozinho ou com 2 a 4 pessoas, cada uma no seu telemóvel.
 
+https://bolinhared.github.io/ArquivoMorto/
+
 ## Como se joga
 
 1. Escolhe um caso no **Arquivo de casos**.
